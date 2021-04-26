@@ -1,4 +1,7 @@
 import 'package:coffe_app/screens/shops.dart';
+import 'package:coffe_app/services/analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/logout.dart';
@@ -28,10 +31,19 @@ class _MenuScreenState extends State<MenuScreen> {
     LogoutScreen(),
   ];
 
+  final FirebaseAnalyticsObserver observer = AnalyticsService.observer;
+
+  void _sendCurrentTabToAnalytics() {
+    final String screeName = '${MenuScreen.routeName}/tab$_selectedIndex';
+    observer.analytics.setCurrentScreen(screenName: screeName);
+    print('Logged $screeName');
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+    _sendCurrentTabToAnalytics();
   }
 
   @override

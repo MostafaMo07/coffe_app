@@ -1,4 +1,5 @@
 import 'package:coffe_app/coffe_router.dart';
+import 'package:coffe_app/services/analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,11 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
 
+  final AnalyticsService _analyticsService = AnalyticsService();
+
   @override
   void initState() {
     super.initState();
-    _emailFieldController.text = 'me@majidhajian.com';
-    _passwordFieldController.text = 'me@majidhajian.com';
+    _emailFieldController.text = 'mo@mostafa.gmail';
+    _passwordFieldController.text = 'mostafa123';
   }
 
   @override
@@ -123,6 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
       widget.scaffoldKey.currentState.hideCurrentSnackBar();
       print(loggedIn);
       if (loggedIn) {
+        _analyticsService.logLogin();
+        _analyticsService.setUserProperties(
+            userId: email, userRole: 'customer');
         CoffeeRouter.instance.push(MenuScreen.route());
       } else {
         final snackBar = SnackBar(

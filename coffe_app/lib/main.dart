@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:coffe_app/coffe_app.dart';
 import 'package:coffe_app/coffe_router.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
@@ -24,18 +26,8 @@ Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-    runApp(
-      AuthProvider(
-        auth: AuthDataProvider(http: HttpClient()),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.system,
-          home: const SplashScreen(),
-          navigatorKey: CoffeeRouter.instance.navigatorKey,
-          theme: getTheme(),
-        ),
-      ),
-    );
+    await Firebase.initializeApp();
+    runApp(CoffeApp());
   }, (error, stackTrace) async {
     print('Caught Dart Error!');
     if (isInDebugMode) {
