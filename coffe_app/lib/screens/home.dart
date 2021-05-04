@@ -1,3 +1,4 @@
+import 'package:coffe_app/screens/signup.dart';
 import 'package:coffe_app/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final registerScaffoldKey = GlobalKey<ScaffoldState>();
   final loginScaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 CommonButton(
                   onPressed: () {
                     CoffeeRouter.instance.push(
-                      LoginScreen.route(loginScaffoldKey),
+                      RegisterScreen.route(registerScaffoldKey),
                     );
                   },
                   text: 'Register',
